@@ -12,10 +12,9 @@
 
 class SpreadSheet : public QTableWidget{
 public:
-    SpreadSheet(QWidget *parent = 0);
+    explicit SpreadSheet(QWidget *parent = nullptr);
     SpreadSheet();
-    SpreadSheet(bool test);
-    SpreadSheet(const SpreadSheet&);
+    explicit SpreadSheet(bool test);
     void clear();
     QTableWidgetItem* itemXY(int r, int c);
 

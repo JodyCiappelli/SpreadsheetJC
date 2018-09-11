@@ -24,8 +24,3 @@ TEST(SpreadSheet, correctSum){
     SpreadSheet spreadSheet(true);
     ASSERT_EQ(120, spreadSheet.itemXY(1,5)->text().toInt());
 }
-
-TEST(SpreadSheet, correctFormula){
-    SpreadSheet spreadSheet(true);
-    ASSERT_EQ(78, spreadSheet.itemXY(1,5)->text().toInt());
-}
