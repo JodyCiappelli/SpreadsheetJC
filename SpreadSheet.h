@@ -10,12 +10,12 @@
 #include "Cell.h"
 
 
-class SpreadSheet : public QTableWidget{
+class SpreadSheet : public QTableWidget {
 public:
     explicit SpreadSheet(QWidget *parent = nullptr);
     SpreadSheet();
     explicit SpreadSheet(bool test);
-    void clear();
+    void create();
     QTableWidgetItem* itemXY(int r, int c);
 
 

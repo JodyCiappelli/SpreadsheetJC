@@ -215,7 +215,7 @@ void Cell::averageCell() const{
 
 void Cell::sumCell() const{
     double sum = 0;
-    for(int i = 1; i <= 15; i++){
+    for(int i = 1; i <= RowCount - 1; i++){
         sum += tableWidget()->item(i, 0)->text().toInt();
     }
     Cell* cell = new Cell;

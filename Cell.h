@@ -32,5 +32,4 @@ private:
     mutable bool cacheIsDirty;
 };
 
-
 #endif //SPREADSHEETJC_CELL_H

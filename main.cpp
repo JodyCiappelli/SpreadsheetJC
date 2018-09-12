@@ -19,7 +19,10 @@ int main(int argc, char *argv[]) {
     app.exec();
 }
 
-void runTests(int argc, char* argv[]){
+void runTests(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
-    RUN_ALL_TESTS();
+    int i = RUN_ALL_TESTS();
+    if (i != 0){
+        std::cout << "Something wrong " << std::endl;
+    }
 }
