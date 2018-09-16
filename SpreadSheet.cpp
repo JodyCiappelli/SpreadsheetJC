@@ -4,17 +4,22 @@
 #include <QtGui>
 #include "Cell.h"
 #include "SpreadSheet.h"
+#include "CellVal.h"
+#include "CellMin.h"
+#include "CellMax.h"
+#include "CellAvg.h"
+#include "CellSum.h"
 #include <QTableWidget>
 #include <iostream>
 
 SpreadSheet::SpreadSheet() {
-    setItemPrototype(new Cell);
+    setItemPrototype(new CellVal);
     setSelectionMode(ContiguousSelection);
     create();
 }
 
 SpreadSheet::SpreadSheet(bool test) {
-    setItemPrototype(new Cell);
+    setItemPrototype(new CellVal);
     setSelectionMode(ContiguousSelection);
     setRowCount(0);
     setColumnCount(0);
@@ -30,33 +35,33 @@ SpreadSheet::SpreadSheet(bool test) {
 
     setCurrentCell(0, 0);
 
-    Cell *cellMin = new Cell;
+    CellMin *cellMin = new CellMin;
     setItem(1, 2, cellMin);
-    Cell *cellMax = new Cell;
+    CellMax *cellMax = new CellMax;
     setItem(1, 3, cellMax);
-    Cell *cellAvg = new Cell;
+    CellAvg *cellAvg = new CellAvg;
     setItem(1, 4, cellAvg);
-    Cell *cellSum = new Cell;
+    CellSum *cellSum = new CellSum;
     setItem(1, 5, cellSum);
 
     for (int i = 1; i <= RowCount - 1; i++) {
-        Cell *cell = new Cell;
+        CellVal *cell = new CellVal;
         cell->setText(QString::number(i));
         setItem(i, 0, cell);
     }
 
-    cellAvg->minCell();
+    cellMin->formula();
 
-    cellAvg->maxCell();
+    cellMax->formula();
 
-    cellAvg->averageCell();
+    cellAvg->formula();
 
-    cellSum->sumCell();
+    cellSum->formula();
 
 }
 
 SpreadSheet::SpreadSheet(QWidget *parent): QTableWidget(parent) {
-    setItemPrototype(new Cell);
+    setItemPrototype(new CellVal);
     setSelectionMode(ContiguousSelection);
     create();
 }
@@ -99,36 +104,41 @@ void SpreadSheet::create() {
     itemSum->setBackgroundColor(Qt::darkCyan);
     setItem(0, 5, itemSum);
 
-    Cell *cellMin = new Cell;
+    CellMin *cellMin = new CellMin;
     setItem(1, 2, cellMin);
-    Cell *cellMax = new Cell;
+    CellMax *cellMax = new CellMax;
     setItem(1, 3, cellMax);
-    Cell *cellAvg = new Cell;
+    CellAvg *cellAvg = new CellAvg;
     setItem(1, 4, cellAvg);
-    Cell *cellSum = new Cell;
+    CellSum *cellSum = new CellSum;
     setItem(1, 5, cellSum);
 
-    for(int i = 1; i <= RowCount - 1; i++) {
-        Cell *cellVal = new Cell;
+    for(int i = 0; i <= RowCount; i++) {
+        CellVal *cellVal = new CellVal;
         std::cout << "Inserisci i valori : " << std::endl;
         int j = 0;
         std::cin >> j;
         cellVal->setText(QString::number(j));
-        setItem(i, 0, cellVal);
+        setItem(i + 1, 0, cellVal);
+
+        cellVal->attach(cellMin);
+        cellVal->attach(cellMax);
+        cellVal->attach(cellAvg);
+        cellVal->attach(cellSum);
     }
     std::cout << "Inserimento dei valori completato " << std::endl;
 
-    cellAvg->minCell();
+    cellMin->formula();
 
-    cellAvg->maxCell();
+    cellMax->formula();
 
-    cellAvg->averageCell();
+    cellAvg->formula();
 
-    cellSum->sumCell();
+    cellSum->formula();
 
     for (int i = 3; i <= RowCount - 1; i++) {
         for (int j = 2; j <= ColumnCount - 1; j++){
-            Cell *item123 = new Cell;
+            Cell *item123 = new CellVal;
             setItem(i, j, item123);
         }
     }

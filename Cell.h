@@ -12,18 +12,15 @@
 class Cell : public QTableWidgetItem{
 public:
     Cell();
-    QTableWidgetItem *clone() const;
-    void setData(int role, const QVariant &value);
+    virtual void setData(int role, const QVariant &value) = 0;
     QVariant data(int role) const;
     void setFormula(const QString &formula);
     QString formula() const;
     void setDirty();
-    void averageCell() const;
-    void maxCell() const;
-    void minCell() const;
-    void sumCell() const;
-private:
+    virtual void formula() = 0;
+protected:
     enum { RowCount = 16 };
+private:
     QVariant value() const;
     QVariant evalExpression(const QString &str, int &pos) const;
     QVariant evalTerm(const QString &str, int &pos) const;

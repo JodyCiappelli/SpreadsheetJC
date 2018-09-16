@@ -3,15 +3,12 @@
 //
 
 #include "Cell.h"
+#include "CellVal.h"
 #include <QtGui>
 #include <iostream>
 
 Cell::Cell() {
     setDirty();
-}
-
-QTableWidgetItem *Cell::clone() const {
-    return new Cell(*this);
 }
 
 void Cell::setFormula(const QString &formula) {
@@ -22,23 +19,11 @@ QString Cell::formula() const {
     return data(Qt::EditRole).toString();
 }
 
-void Cell::setData(int role, const QVariant &value) {
-    QTableWidgetItem::setData(role, value);
-    if (role == Qt::EditRole) {
-        setDirty();
-        averageCell();
-        minCell();
-        maxCell();
-        sumCell();
-    }
-}
-
 void Cell::setDirty() {
     cacheIsDirty = true;
 }
 
-QVariant Cell::data(int role) const
-{
+QVariant Cell::data(int role) const {
     if (role == Qt::DisplayRole) {
         if (value().isValid()) {
             return value().toString();
@@ -53,7 +38,8 @@ QVariant Cell::data(int role) const
         }
     } else {
         return QTableWidgetItem::data(role);
-    } }
+    }
+}
 
 const QVariant Invalid;
 QVariant Cell::value() const {
@@ -84,8 +70,7 @@ QVariant Cell::value() const {
     return cachedValue;
 }
 
-QVariant Cell::evalExpression(const QString &str, int &pos) const
-{
+QVariant Cell::evalExpression(const QString &str, int &pos) const {
     QVariant result = evalTerm(str, pos);
     while (str[pos] != QChar::Null) {
         QChar op = str[pos];
@@ -93,8 +78,7 @@ QVariant Cell::evalExpression(const QString &str, int &pos) const
             return result;
         ++pos;
         QVariant term = evalTerm(str, pos);
-        if (result.type() == QVariant::Double
-            && term.type() == QVariant::Double) {
+        if (result.type() == QVariant::Double && term.type() == QVariant::Double) {
             if (op == '+') {
                 result = result.toDouble() + term.toDouble();
             } else {
@@ -106,8 +90,7 @@ QVariant Cell::evalExpression(const QString &str, int &pos) const
     return result;
 }
 
-QVariant Cell::evalTerm(const QString &str, int &pos) const
-{
+QVariant Cell::evalTerm(const QString &str, int &pos) const {
     QVariant result = evalFactor(str, pos);
     while (str[pos] != QChar::Null) {
         QChar op = str[pos];
@@ -115,8 +98,7 @@ QVariant Cell::evalTerm(const QString &str, int &pos) const
             return result;
         ++pos;
         QVariant factor = evalFactor(str, pos);
-        if (result.type() == QVariant::Double
-            && factor.type() == QVariant::Double) {
+        if (result.type() == QVariant::Double && factor.type() == QVariant::Double) {
             if (op == '*') {
                 result = result.toDouble() * factor.toDouble();
             } else {
@@ -132,8 +114,7 @@ QVariant Cell::evalTerm(const QString &str, int &pos) const
     return result;
 }
 
-QVariant Cell::evalFactor(const QString &str, int &pos) const
-{
+QVariant Cell::evalFactor(const QString &str, int &pos) const {
     QVariant result;
     bool negative = false;
     if (str[pos] == '-') {
@@ -178,47 +159,4 @@ QVariant Cell::evalFactor(const QString &str, int &pos) const
         }
     }
     return result;
-}
-
-void Cell::minCell() const {
-    int min = 9999;
-    for(int i = 1; i <= RowCount - 1; i++){
-        if(tableWidget()->item(i, 0)->text().toInt() < min)
-            min = tableWidget()->item(i, 0)->text().toInt();
-    }
-    Cell* cell = new Cell;
-    cell->setText(QString::number(min));
-    this->tableWidget()->setItem(1, 2, cell);
-}
-
-void Cell::maxCell() const {
-    int max = -9999;
-    for(int i = 1; i <= RowCount - 1; i++){
-        if(tableWidget()->item(i, 0)->text().toInt() > max)
-            max = tableWidget()->item(i, 0)->text().toInt();
-    }
-    Cell* cell = new Cell;
-    cell->setText(QString::number(max));
-    this->tableWidget()->setItem(1, 3, cell);
-}
-
-void Cell::averageCell() const{
-    double sum = 0;
-    for(int i = 1; i <= RowCount - 1;i++){
-        sum += tableWidget()->item(i, 0)->text().toInt();
-    }
-    Cell* cell = new Cell;
-    cell->setText(QString::number(sum / (RowCount - 1)));
-    this->tableWidget()->setItem(1, 4, cell);
-
-}
-
-void Cell::sumCell() const{
-    double sum = 0;
-    for(int i = 1; i <= RowCount - 1; i++){
-        sum += tableWidget()->item(i, 0)->text().toInt();
-    }
-    Cell* cell = new Cell;
-    cell->setText(QString::number(sum));
-    this->tableWidget()->setItem(1, 5, cell);
 }

@@ -8,7 +8,7 @@ find_package( Qt5Core REQUIRED )
 find_package( Qt5Widgets REQUIRED )
 find_package( Qt5Gui REQUIRED )
 
-add_executable(SpreadsheetJC main.cpp SpreadSheet.cpp SpreadSheet.h Cell.cpp Cell.h SpreadSheetTest.cpp)
+add_executable(SpreadsheetJC main.cpp SpreadSheet.cpp SpreadSheet.h Cell.cpp Cell.h SpreadSheetTest.cpp CellMin.cpp CellMin.h CellMax.cpp CellMax.h CellAvg.cpp CellAvg.h CellSum.cpp CellSum.h CellVal.cpp CellVal.h Subject.h Observer.h Subject.cpp)
 
 qt5_use_modules(SpreadsheetJC Core Widgets Gui)
 get_target_property(QtCore_location Qt5::Core LOCATION)
