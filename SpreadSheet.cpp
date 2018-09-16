@@ -152,3 +152,5 @@ Cell *SpreadSheet::cell(int row, int column) const {
 QTableWidgetItem* SpreadSheet::itemXY(int r, int c) {
     return item(r,c);
 }
+
+SpreadSheet::~SpreadSheet() {}

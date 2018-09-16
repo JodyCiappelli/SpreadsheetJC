@@ -160,3 +160,4 @@ QVariant Cell::evalFactor(const QString &str, int &pos) const {
     }
     return result;
 }
+

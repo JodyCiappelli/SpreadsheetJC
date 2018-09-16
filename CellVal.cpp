@@ -23,6 +23,12 @@ void CellVal::setData(int role, const QVariant &value) {
     if (role == Qt::EditRole) {
         setDirty();
         notify();
-        //spreadSheetRefresh();
     }
+}
+
+CellVal::~CellVal() {
+    for(auto itr = std::begin(observers); itr != std::end(observers); itr++) {
+        this->detach((*itr));
+    }
+    tableWidget()->removeCellWidget(this->row(),this->column());
 }

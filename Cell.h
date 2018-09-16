@@ -18,6 +18,7 @@ public:
     QString formula() const;
     void setDirty();
     virtual void formula() = 0;
+    virtual ~Cell(){}
 protected:
     enum { RowCount = 16 };
 private:

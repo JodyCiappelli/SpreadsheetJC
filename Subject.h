@@ -14,6 +14,7 @@ public:
     void attach(Observer *abstractObserver);
     void detach(Observer *abstractObserver);
     void notify();
+    virtual ~Subject() {}
 
 protected:
     std::list<Observer*> observers;

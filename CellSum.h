@@ -13,6 +13,7 @@ public:
     void update() override;
     void formula() override;
     void setData(int role, const QVariant &value) override;
+    virtual ~CellSum(){}
 };
 
 

@@ -14,7 +14,7 @@ public:
     int getValue() const;
     void setValue(int value);
     void formula() override;
-
+    virtual ~CellVal();
     void setData(int role, const QVariant &value) override;
 
 private:
