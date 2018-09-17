@@ -14,7 +14,7 @@ class SpreadSheet : public QTableWidget {
 public:
     explicit SpreadSheet(QWidget *parent = nullptr);
     SpreadSheet();
-    virtual ~SpreadSheet();
+    virtual ~SpreadSheet(){}
     explicit SpreadSheet(bool test);
     void create();
     QTableWidgetItem* itemXY(int r, int c);

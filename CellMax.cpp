@@ -10,7 +10,7 @@ void CellMax::update() {
 }
 
 void CellMax::formula() {
-    int max = -9999;
+    int max = INT_MIN;
     for(int i = 1; i <= RowCount - 1; i++){
         if(tableWidget()->item(i, 0)->text().toInt() > max)
             max = tableWidget()->item(i, 0)->text().toInt();

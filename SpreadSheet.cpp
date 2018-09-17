@@ -113,13 +113,13 @@ void SpreadSheet::create() {
     CellSum *cellSum = new CellSum;
     setItem(1, 5, cellSum);
 
-    for(int i = 0; i <= RowCount; i++) {
+    for(int i = 1; i <= RowCount - 1; i++) {
         CellVal *cellVal = new CellVal;
         std::cout << "Inserisci i valori : " << std::endl;
         int j = 0;
         std::cin >> j;
         cellVal->setText(QString::number(j));
-        setItem(i + 1, 0, cellVal);
+        setItem(i , 0, cellVal);
 
         cellVal->attach(cellMin);
         cellVal->attach(cellMax);
@@ -153,4 +153,3 @@ QTableWidgetItem* SpreadSheet::itemXY(int r, int c) {
     return item(r,c);
 }
 
-SpreadSheet::~SpreadSheet() {}
